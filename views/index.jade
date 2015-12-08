@@ -1,0 +1,125 @@
+extends ./layout.jade
+block content
+  div
+  .container
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container
+          a.btn.btn-navbar(data-toggle='collapse', data-target='.nav-collapse')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.brand(href='#') Tic-Tac-Toe
+    // Example row of columns
+    .row(id='login')
+      .span6
+        h2 Register
+        form.form-horizontal
+          .control-group
+            label.control-label(for='full_name_register') Full Name
+            .controls
+              input#full_name_register(type='text', placeholder='Full Name')
+          .control-group
+            label.control-label(for='user_name_register') User Name
+            .controls
+              input#user_name_register(type='text', placeholder='User Name')
+          .control-group
+            label.control-label(for='password_register') Password
+            .controls
+              input#password_register(type='password', placeholder='Password')
+          .control-group
+            .controls
+              button#register_button.btn.btn-primary(type='button') Register
+      .span6
+        h2 Log in
+        form.form-horizontal
+          .control-group
+            label.control-label(for='user_name_login') User Name
+            .controls
+              input#user_name_login(type='text', placeholder='User Name')
+          .control-group
+            label.control-label(for='password_login') Password
+            .controls
+              input#password_login(type='password', placeholder='Password')
+          .control-group
+            .controls
+              button#login_button.btn.btn-success(type='button') Login
+
+    hr
+    .hero-unit.hide(id='dashboard')
+        h1 Tic Tac Toe!
+        p &nbsp;
+        .btn-group()
+            button#new_game_button.btn.btn-primary.btn-large(type='button') New Game
+            button#past_game_button.btn.btn-primary.btn-large(type='button') Past Games
+
+    
+    .row.hide(id='game')
+      div(style="width:100%;height:100%; border:1px dashed #000;min-height: 50px;overflow:hidden;margin:auto;", id="zone")
+        span(style="float:left")
+          h1(id='stats')
+            span(id="turn")
+        span(style="float:right")
+          h1(id='p1') Waiting...
+          h1(id='p2') Waiting... 
+      p &nbsp;
+      table.tic_tac_table(id='game_table')
+        tr
+          td(id='00')
+          td(id='01')
+          td(id='02')
+        tr
+          td(id='10')
+          td(id='11')
+          td(id='12')
+        tr
+          td(id='20')
+          td(id='21')
+          td(id='22')
+      p &nbsp;
+
+    table.table.hide(id='past_games')
+      thead
+        tr
+          th #
+          th Opponent
+          th Winner
+          th Date
+          th View Board
+      tbody
+        tr
+
+    .row.hide(id='past_game_board')
+      div(style="width:100%;height:100%; border:1px dashed #000;min-height: 50px;overflow:hidden;margin:auto;")
+        span(style="float:left")
+          h1(id='stats')
+            span(id="turn")
+        span(style="float:right")
+          h1(id='p1') Waiting...
+          h1(id='p2') Waiting... 
+      p &nbsp;
+      table.tic_tac_table(id='past_table')
+        tr
+          td(id='00')
+          td(id='01')
+          td(id='02')
+        tr
+          td(id='10')
+          td(id='11')
+          td(id='12')
+        tr
+          td(id='20')
+          td(id='21')
+          td(id='22')
+      p &nbsp;
+
+  // /container
+  // Modal
+  #status_box.modal.hide.fade(tabindex='-1', role='dialog', aria-labelledby='status_box', aria-hidden='true')
+    .modal-header
+      button.close(type='button', data-dismiss='modal', aria-hidden='true') ×
+      h3#status_box_header Modal header
+    .modal-body
+      p#status_box_body
+    .modal-footer
+      button.btn(data-dismiss='modal', aria-hidden='true') Close
