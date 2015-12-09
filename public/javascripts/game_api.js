@@ -1,3 +1,13 @@
+/**
+This class handles the api for the client and communicates with the game server.
+Methods:
+register : handles registration for a new user
+login : handles login for an existing user
+player connected : informs the server that a player has joined
+mark cell : informs the server which cell was clicked
+view past games : fetches the past game data for the user (if any)
+**/
+
 'use strict';
 
 var Tic_Tac_Toe = function() {

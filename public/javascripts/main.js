@@ -1,5 +1,6 @@
 'use strict';
 
+// Variables which keep track of the game api as well as store user information and game state
 var game = new Tic_Tac_Toe();
 var _user_name = null;
 var _start_game = false;
@@ -8,6 +9,7 @@ var _mark = 'x';
 
 game.on('init', function(err, data) {});
 
+// triggered when two users have joined. Updates the DOM
 game.on('game_start', function(err, data) {
   if(err) return;
   var showed_x, showed_o = false;
@@ -29,6 +31,7 @@ game.on('game_start', function(err, data) {
   if(showed_x && showed_o) _start_game = true;
 });
 
+// triggered when a player (self of opponent) makes a move. Updates the DOM
 game.on('game_move', function(err, data) {
   if(err) return;
   if($.trim($(data.cell).html()) == '') {
@@ -44,6 +47,7 @@ game.on('game_move', function(err, data) {
   }
 });
 
+// The game was a draw or a win or a loss. Shows a modal message with the result
 game.on('game_over', function(err, data) {
   if(data.draw === true) {
     general_box_show('It was a draw', '<p>Your equally good, it is a draw</p>');
@@ -54,6 +58,8 @@ game.on('game_over', function(err, data) {
   }
 });
 
+// triggered when the user clicks on the register button on the main page.
+// The game api will send the server the user details
 var register_button_handler = function(game) {
   return function() {    
     var full_name = $('#full_name_register').val();
@@ -68,6 +74,8 @@ var register_button_handler = function(game) {
   };
 };
 
+// triggered when the user clicks on the login button on the main page.
+// The game api will send the server user details to be verified
 var login_button_handler = function(game) {
   return function() {
     var user_name = $('#user_name_login').val();
@@ -81,6 +89,7 @@ var login_button_handler = function(game) {
   };
 };
 
+// starts a new game
 var new_game_button_handler = function(game) {
   return function() {
     game.player_connected(_user_name, function(err, data) {
@@ -90,6 +99,7 @@ var new_game_button_handler = function(game) {
   };
 };
 
+// shows the past games played by the user
 var past_game_button_handler = function(game) {
   return function() {
      game.view_past_games(_user_name, function(err, data) {
@@ -100,6 +110,7 @@ var past_game_button_handler = function(game) {
   };
 };
 
+// changes views
 function render_view(view_id) {
   $('#login').hide();
   $('#dashboard').hide();
@@ -109,6 +120,7 @@ function render_view(view_id) {
   $(view_id).show();
 }
 
+// triggered when the box on the game board is clicked
 var mark_box = function(coordinates) {
   if(_start_game) {
     if(_players[_user_name] != _mark) {
@@ -128,6 +140,7 @@ var mark_box = function(coordinates) {
   }
 };
 
+// shows the past games table
 var populate_table = function(data) {
   for (var i = 0;i < data.length;i++) {
     var opponent = (data[i].player1_user_name == _user_name) ? data[i].player2_user_name : data[i].player1_user_name;
@@ -153,7 +166,7 @@ var populate_table = function(data) {
   }
 };
 
- // * Helper methods
+ // Helper methods
  
 var error_box_show = function(error) {
   $('#status_box_header').html('Error');
@@ -161,15 +174,13 @@ var error_box_show = function(error) {
   $('#status_box').modal({backdrop:true, show:true});  
 };
 
-/**
- * General message box with configurable title and body content
- */ 
 var general_box_show = function(title, body) {
   $('#status_box_header').html(title);
   $('#status_box_body').html(body);
   $('#status_box').modal({backdrop:true, show:true});  
 };
 
+// shows the past game board state (final state only)
 var show_board = function(board) {
   for (var i in board) {
     $(i +'_past').html(board[i]);
