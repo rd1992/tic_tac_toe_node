@@ -34,14 +34,15 @@ game.on('game_start', function(err, data) {
 // triggered when a player (self of opponent) makes a move. Updates the DOM
 game.on('game_move', function(err, data) {
   if(err) return;
-  if($.trim($(data.cell).html()) == '') {
+  var cell_id = '#' + data.cell;
+  if($.trim($(cell_id).html()) == '') {
     if( _mark == 'x') {
-      $(data.cell).html('X');
+      $(cell_id).html('X');
       _mark = 'o';
-      $(data.cell).css('color','red');
+      $(cell_id).css('color','red');
     } else {
-      $(data.cell).html('O');
-      $(data.cell).css('color','blue');
+      $(cell_id).html('O');
+      $(cell_id).css('color','blue');
       _mark = 'x';
     }  
   }
@@ -128,7 +129,7 @@ var mark_box = function(coordinates) {
     } else {
       if($.trim($(coordinates).html()) == '') {
 
-        game.mark_cell(_user_name, coordinates, _mark, function(err, data) {
+        game.mark_cell(_user_name, coordinates.id, _mark, function(err, data) {
           if (err) return error_box_show(err.error);
         });
       } else {
@@ -199,40 +200,7 @@ $(document).ready(function() {
   $('#new_game_button').click(new_game_button_handler(game));
   $('#past_game_button').click(past_game_button_handler(game));
 
-  $('#00').click(function()
-  {
-    mark_box('#00');
-  });
-  $('#01').click(function()
-  {
-    mark_box('#01');
-  });
-  $('#02').click(function()
-  {
-    mark_box('#02');
-  });
-  $('#10').click(function()
-  {
-    mark_box('#10');
-  });
-  $('#11').click(function()
-  {
-    mark_box('#11');
-  });
-  $('#12').click(function()
-  {
-    mark_box('#12');
-  });
-  $('#20').click(function()
-  {
-    mark_box('#20');
-  });
-  $('#21').click(function()
-  {
-    mark_box('#21');
-  });
-  $('#22').click(function()
-  {
-    mark_box('#22');
+  $('#game_table td.cell').click(function(e) {
+    mark_box(e.currentTarget);
   });
 });
