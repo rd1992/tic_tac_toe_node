@@ -130,21 +130,26 @@ var mark_box = function(coordinates) {
 
 var populate_table = function(data) {
   for (var i = 0;i < data.length;i++) {
-    var game_num = i+1;
     var opponent = (data[i].player1_user_name == _user_name) ? data[i].player2_user_name : data[i].player1_user_name;
     var winner = data[i].winner;
     var time = data[i].created_on;
-    var board = data[i].board;
+    var board = JSON.stringify(data[i].board);
+    var game_num = i+1;
     var color = (winner == _user_name) ? 'success' : ((winner == 'draw') ? 'info' : 'error');
-    console.log(board);
+
+    var board_details = $(document.createElement('td'));
+    board_details.html('View');
+    board_details.attr('data-val', board);
     var html = '<tr class = ' + color + '>'
         + '<td>'+ game_num +'</td>'
         + '<td>'+ opponent +'</td>'
         + '<td>'+ winner +'</td>'
-        + '<td>'+ time +'</td>'
-        + '<td><a onclick="show_board(\'' + board + '\')">View</a></td>'
-        + '</tr>';
+        + '<td>'+ time +'</td></tr>';
     $('#past_games > tbody:last-child').append(html);
+    $('#past_games > tbody:last-child > tr:last-child').append(board_details);
+    $('#past_games > tbody:last-child > tr:last-child > td:last-child').click(function(){
+      show_board($(this).data('val'));
+    });
   }
 };
 
@@ -166,13 +171,15 @@ var general_box_show = function(title, body) {
 };
 
 var show_board = function(board) {
-  console.log(board);
   for (var i in board) {
-    console.log($('table#past_table' + i ));
-    $('table#past_table >' + i ).html(board[i]);
+    $(i +'_past').html(board[i]);
+    if (board[i] == 'x') {
+      $(i +'_past').css('color', 'red');
+    } else if (board[i] == 'o') {
+      $(i +'_past').css('color', 'blue');
+    }
   }
   render_view('#past_game_board');
-  console.log(board);
 };
 
 $(document).ready(function() {

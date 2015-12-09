@@ -90,27 +90,19 @@ block content
         tr
 
     .row.hide(id='past_game_board')
-      div(style="width:100%;height:100%; border:1px dashed #000;min-height: 50px;overflow:hidden;margin:auto;")
-        span(style="float:left")
-          h1(id='stats')
-            span(id="turn")
-        span(style="float:right")
-          h1(id='p1') Waiting...
-          h1(id='p2') Waiting... 
-      p &nbsp;
       table.tic_tac_table(id='past_table')
         tr
-          td(id='00')
-          td(id='01')
-          td(id='02')
+          td(id='00_past')
+          td(id='01_past')
+          td(id='02_past')
         tr
-          td(id='10')
-          td(id='11')
-          td(id='12')
+          td(id='10_past')
+          td(id='11_past')
+          td(id='12_past')
         tr
-          td(id='20')
-          td(id='21')
-          td(id='22')
+          td(id='20_past')
+          td(id='21_past')
+          td(id='22_past')
       p &nbsp;
 
   // /container
