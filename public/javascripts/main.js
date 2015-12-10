@@ -103,8 +103,7 @@ var new_game_button_handler = function(game) {
 // shows the past games played by the user
 var past_game_button_handler = function(game) {
   return function() {
-     game.view_past_games(_user_name, function(err, data) {
-      if(err) return error_box_show(err.error);
+    $.get('/past_games',{user_name:_user_name}, function(data) {
       populate_table(data);
       render_view('#past_games');
     });
@@ -183,12 +182,17 @@ var general_box_show = function(title, body) {
 
 // shows the past game board state (final state only)
 var show_board = function(board) {
-  for (var i in board) {
-    $(i +'_past').html(board[i]);
-    if (board[i] == 'x') {
-      $(i +'_past').css('color', 'red');
-    } else if (board[i] == 'o') {
-      $(i +'_past').css('color', 'blue');
+  for (var row = 0; row < board.length; row++) {
+    for (var col = 0; col < board.length; col++) {
+      var cell_id = '#' + row.toString() + col.toString() +'_past'; 
+      if (board[row][col] !== '0') {
+        $(cell_id).html(board[row][col].toUpperCase());
+      }
+      if (board[row][col] == 'x') {
+        $(cell_id).css('color', 'red');
+      } else if (board[row][col] == 'o') {
+        $(cell_id).css('color', 'blue');
+      }
     }
   }
   render_view('#past_game_board');

@@ -5,7 +5,6 @@ register : handles registration for a new user
 login : handles login for an existing user
 player connected : informs the server that a player has joined
 mark cell : informs the server which cell was clicked
-view past games : fetches the past game data for the user (if any)
 **/
 
 'use strict';
@@ -71,11 +70,6 @@ Tic_Tac_Toe.prototype.player_connected = function(user_name, callback) {
 Tic_Tac_Toe.prototype.mark_cell = function(player, cell, mark, callback) {  
   this.once('mark_cell', callback);
   this.socket.emit('mark_cell', {player:player, cell: cell, mark:mark});
-};
-
-Tic_Tac_Toe.prototype.view_past_games = function(user_name, callback) {  
-  this.once('view_past_games', callback);
-  this.socket.emit('view_past_games', {user_name: user_name});
 };
 
 var create_error = function(event, err) {
